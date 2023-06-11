@@ -1,0 +1,234 @@
+
+{% extends 'boutique/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style type="text/css">
+    body{
+        background-color: hsl(0, 0%, 98%);
+    }
+    /* Base styles for all screen sizes */
+    .zoom, .original {
+        position: relative;
+    }
+    .zoom {
+        display: inline-block;
+    }
+    .original {
+        cursor: crosshair;
+    }
+    #target {
+        width: calc(var(--t) / 2);
+    }
+    .zoom .viewer {
+        position: absolute;
+        top: 0;
+        left: 100%;
+        width: 1000px;
+        height: 600px;
+        overflow: hidden;
+    }
+    .zoom .viewer img {
+        position: absolute;
+    }
+    .magnifier {
+        position: absolute;
+        background: #000;
+        opacity: 0.7;
+        top: 0;
+        left: 0;
+    }
+    .magnifier, .viewer {
+        display: none;
+    }
+    .original:hover ~ div {
+        display: block;
+    }
+    .original::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+    }
+    .detail {
+        margin-left: 20px;
+        margin-right: 20px;
+        width: 40%;
+    }
+    .delivery {
+        width: 25%;
+        border: 2px solid gray;
+        border-radius: 5px;
+    }
+    .box-element {
+        box-shadow: hsl(0, 0%, 80%) 0 0 16px;
+        background-color: #fff;
+        border-radius: 4px;
+        padding: 10px;
+    }
+    .thumbnail {
+        width: 261px;
+        height: 230px;
+        -webkit-box-shadow: -1px -3px 5px -2px rgba(214,214,214,1);
+        -moz-box-shadow: -1px -3px 5px -2px rgba(214,214,214,1);
+        box-shadow: -1px -3px 5px -2px rgba(214,214,214,1);
+    }
+    #othercat {
+        width: 25%;
+    }
+    .reduction{
+    position: absolute;
+    top: 0;
+    right: 2;
+    font-weight: bold;
+    background-color:indianred;
+    color: white;
+    padding: 2px 5px;
+    font-size: small;
+}
+    /* Media queries for smaller screens */
+    @media (max-width: 768px) {
+        .cn.f.a.j {
+            flex-direction: column;
+            align-items: center;
+        }
+        .detail {
+            width: 100%;
+        }
+        .delivery {
+            margin-top: 20px;
+            width: 100%;
+        }
+        #picturesect {
+            margin-bottom: 20px;
+        }
+        #target {
+            height: auto;
+            max-width: 100%;
+        }
+    }
+</style>
+
+<section style="display: flex; margin-top: 50px;margin-bottom: 30px;">
+    <div id="picturesect" class="cn f a j">
+        <div class="wp f" style="background-color: darkcyan;">
+            <aside>
+                <div class="zoom">
+                    <div  class="original">
+                        <img src="{{ product.imageURL }}" id="target" height="300px" width="200px">
+                    </div>
+                    <div class="viewer">max-
+                        <img src="{{ product.imageURL }}">
+                    </div>
+                    <div class="magnifier"></div>
+                </div>	
+            </aside>
+            <aside>
+                <div class="mgt">
+                    <input type="range" min="2" max="10" value="2">
+                </div>
+            </aside>
+        </div>
+    </div >
+    <div class="detail">
+        <header style="text-align: center;border-bottom: 1px solid gray;">
+            <h2>{{ product.name }}</h2>
+        </header>
+        <p>{{ product.description }}</p>
+        <br>
+        <div style="display: flex">
+            <h3 style="font-size:medium;width: 49%"> {{ product.f_reducedprice}} cfa</h3>
+            <h3 style="font-size:medium;width: 45%;text-decoration: line-through;">{{ product.f_actualprice }} cfa</h3>
+        </div>
+        <br>
+        <button style="margin-top: 4px;margin-bottom: 2px;margin-right:80px;margin-left:10%;" data-product="{{product.id}}" data-action="add" class="btn btn-secondary add-btn update-cart">Ajoutez<i class="fa-solid fa-cart-plus fa-xl"></i></button>
+        <a class="btn btn-success" href="#"> Achetez Maintenant</a>
+        <br>
+    </div>
+    <div  class="delivery">
+        <header style="text-align: center;border-bottom: 1px solid gray;">
+            <h6>Livraison partout au Burkina</h6>
+        </header>
+        <div style="text-align: center;">
+            <label for="ville">Choisissez votre ville:</label>
+            <select id="ville" name="ville">
+                <option value="Ouaga">Ouaga</option>
+                <option value="Bobo">Bobo</option>
+                <option value="Kaya">Kaya</option>
+                <option value="Koudougou">Koudougou</option>
+                <option value="Ziniaré">Ziniaré</option>
+                <option value="Banfora">Banfora</option>
+                <option value="Fada N'Gourma">Fada N'Gourma</option>
+                <option value="Dori">Dori</option>
+                <option value="Tenkodogo">Tenkodogo</option>
+            </select>
+        </div> 
+        <div style="display: flex;margin-top: 40px;">
+            <i class="fa-solid fa-truck fa-xl"></i>
+            <div style="display: block;">
+                <p >Livraison à Domicile</p>
+                <p style="font-size: 13px;" >gratuite si le prixAchat >= 10,000.00 CFA
+                    Livré au plus tard 48 heures si vous commandez d'ici 5heures 26mins
+                </p>
+            </div>
+        </div>   
+        <div style="display: flex;margin-top: 10px;">
+            <i class="fa-solid fa-house-crack fa-xl"></i>
+            <div style="display: block;">
+                <p >Retour du produit</p>
+                <p style="font-size: 13px;">Valable avant 14 jours pour la boutique officielle et
+                    Valable avant 7 jours pour les autres boutiques 
+                </p>
+            </div>
+        </div>           
+    </div>
+</section>
+
+<section >
+    <div class="row" style="background-color: #4e555b;margin-bottom: 30px;border-radius: 20px">
+        {% for product in products_in_same_category %}
+            <div class="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-6" style="position: relative;margin-top: 10px">
+                <a href="{% url 'product_detail' product.id %}?category={{ product.category }}"><img class="thumbnai" src="{{ product.image.url }}" alt="{{ product.name }}" height="200" width="200"></a>
+                <h3 style="font-size: small;color:snow">{{ product.name }}</h3>
+                <div style="display:flex;color:snow">
+                    <h3 style="font-size: small;width: 49%"> {{ product.f_reducedprice}} cfa</h3>
+                    <h3 style="font-size:10px;width: 45%;text-decoration: line-through;">{{ product.f_actualprice }} cfa</h3>
+                </div>
+                <div class="reduction">-{{ product.reduction }}%</div>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+
+
+{% endblock content %}
+
+{% block javascript %}
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+    <script type="text/javascript" src="{% static 'js/zoom.js' %}"></script>
+    <script type="text/javascript">
+        var l = $('#target').zoom(2);
+        $('input[type="range"]').on('change', function () {
+            l.setZoom(this.value);
+        });
+    </script>
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36251023-1']);
+        _gaq.push(['_setDomainName', 'jqueryscript.net']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s); 
+
+        })();
+    </script>
+{% endblock javascript %}
+
+

@@ -1,0 +1,44 @@
+ 
+{% extends 'boutique/base.html' %}
+{% load static %}
+
+{% block title %}<h1>Settings Page</h1> {% endblock title %}
+
+{% block content %} 
+<style>
+    body{
+        background: #ccc;
+    }
+    #loginsection{
+        text-align: center;
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
+    .logincontent {
+        background-color: hsl(0, 0%, 98%);
+        max-width: 400px;  
+        margin: 0 auto;  
+        border-radius: 10px; 
+        border: 1px solid #ccc;  
+        padding: 20px; 
+    }
+</style>
+<section id="loginsection">
+    <div class="logincontent">
+        {% if facebook_login %}
+        <p>Connected as <a href="https://facebook.com/{{ facebook_login.extra_data.username }}/" target="_blank">{{ facebook_login.extra_data.id }}</a></p>
+        {% if can_disconnect %}
+            <form method="post" action="{% url 'social:disconnect' 'facebook' %}">
+            {% csrf_token %}
+            <button type="submit">Disconnect from Facebook</button>
+            </form>
+        {% else %}
+            <button type="button" disabled>Disconnect from Facebook</button>
+            <p style="color: red">You must <a href="{% url 'password' %}">define a password</a> for your account before disconnecting from Facebook.</p>
+        {% endif %}
+        {% else %}
+        <a href="{% url 'social:begin' 'facebook' %}">Connect to Facebook</a>
+        {% endif %}
+    </div>
+</section>
+{% endblock content %}

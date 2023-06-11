@@ -1,0 +1,50 @@
+ 
+{% load static %}
+{% block content %} 
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'fontawesomefree/css/fontawesome.min.css' %}"> 
+<link rel="stylesheet" href="{% static 'fontawesomefree/css/all.min.css' %}"> 
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>
+<style>
+    body{
+        background: #ccc;
+    }
+    #loginsection{
+        text-align: center;
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
+    .logincontent {
+        background-color: hsl(0, 0%, 98%);
+        max-width: 400px;  
+        margin: 0 auto;  
+        border-radius: 10px; 
+        border: 1px solid #ccc;  
+        padding: 20px; 
+    }
+    .logincontrole{
+        margin-bottom: 5px;
+    }
+</style>
+<section id="loginsection">
+    <div class="logincontent">
+        <header style="margin-bottom: 10px;">
+            <h2>Connectez vous !</h2>
+        </header>
+        <hr>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="logincontrole">
+                <button style="margin-left: 50px;" class="btn btn-success" type="submit"><i class="fa-solid fa-user fa-xl"></i> Se Connecter</button>
+            </div>
+            <a style="margin-left: 50px;" href="{% url 'signup' %}">Pas de Compte ? S'inscrire !</a>
+        </form>
+        <hr/>
+        <p><strong>------- OU --------</strong></p>
+        <a class="btn btn-primary" href="{% url 'social:begin' 'facebook' %}"> <i class="fa-brands fa-facebook fa-xl"></i> Se Connecter avec Facebook</a> 
+    </div>
+</section>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
+{% endblock content %}

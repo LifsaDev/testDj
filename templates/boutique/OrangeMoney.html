@@ -1,0 +1,83 @@
+{% extends 'boutique/base.html' %}
+{% load static %}
+
+{% block content %}
+    <style>
+        body{
+        background-color: hsl(0, 0%, 98%);
+    }
+
+    h1,h2,h3,h4,h5,h6{
+        color:hsl(0, 0%, 30%);
+    }
+
+    .box-element{
+        box-shadow:hsl(0, 0%, 80%) 0 0 16px;
+        background-color: #fff;
+        border-radius: 4px;
+        padding: 10px;
+    }
+
+     .col-lg-6{
+        margin-top: 10px;
+    }
+
+    .btn{
+        border-radius: 0;
+    }
+
+
+    .form-field{
+        width:250px;
+        display: inline-block;
+        padding: 5px;
+    }
+    .amount{
+        width:250px;
+        display: inline-block;
+        padding: 5px;
+    }
+    .hidden{
+        display: none!important;
+    }
+    </style>
+    {% load my_filters %}
+     <div class="row" style="margin-top: 30px;margin-bottom: 30px">
+		<div class="col-lg-6 mx-auto  text-center">
+			<div class="box-element" id="form-wrapper">
+				<form id="form"  method="POST" action="{% url 'initiate_payment_orange' %}">
+                     {% csrf_token %}
+					<div id="amount-info">
+						<div class="amount">
+							 <h3>Livraison: </h3><h6>{{ shipping_cost|add_commas }} CFA</h6>
+						</div>
+						<div class="amount">
+							<h3>Total: </h3><h6>{{ total|add_commas }} CFA</h6>
+						</div>
+					</div>
+
+					<div id="shipping-info">
+						<hr>
+                        <div style="display: inline">
+                            <img src="{% static 'images/orangemoney.png' %}" height="80" width="160">
+                            <p>Compte Orange Money</p>
+                        </div>
+						<hr>
+						<div class="form-field">
+							  <input type="hidden" name="amount" value="{{ total }}">
+                              <label for="phone_number">Numéro de téléphone :</label>
+                              <input type="text" name="phone_number" placeholder="Ex: +22674643216" id="phone_number" required>
+						</div>
+					</div>
+					<hr>
+					<input id="form-button" class="btn btn-success btn-block" type="submit" value="Validez">
+				</form>
+			</div>
+
+		</div>
+	</div>
+
+{% endblock content %}
+
+
+ 

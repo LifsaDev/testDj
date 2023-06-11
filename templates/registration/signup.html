@@ -1,0 +1,121 @@
+ 
+{% load static %}
+{% block content %} 
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'fontawesomefree/css/fontawesome.min.css' %}"> 
+<link rel="stylesheet" href="{% static 'fontawesomefree/css/all.min.css' %}"> 
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>
+<style>
+    body{
+        background: #ccc;
+    }
+    #loginsection{
+        text-align: center;
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
+    /* .logincontent {
+        background-color: hsl(0, 0%, 98%);
+        max-width: 1400px;  
+        margin: 0 auto;  
+        border-radius: 10px; 
+        border: 1px solid #ccc;  
+        padding: 20px; 
+    } */
+    .signup-form-container {
+      width: 600px;
+      margin: auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+    
+    .signup-title {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    
+    .form-group {
+      margin-bottom: 5px;
+      display: flex;
+    }
+    
+    label {
+      
+      display: inline;
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 2px;
+      color: #555;
+    }
+    
+    input {
+      display: flex;
+      width: 80%;
+      padding: 5px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      font-size: 16px;
+      color: #555;
+    }
+    
+    button {
+      display: block;
+      background-color: #008CBA;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+</style>
+<section id="loginsection">
+  <div class="logincontent">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 mx-auto">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="mb-0">Inscrivez vous !</h3>
+            </div>
+            <div class="card-body">
+              <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label style="margin-right: 70px;" for="{{ form.username.id_for_label }}">Username</label>
+                  {{ form.username }}
+                </div>
+                <div class="form-group">
+                  <label style="margin-right: 100px;" for="{{ form.email.id_for_label }}">Email</label>
+                  {{ form.email }}
+                </div>
+                <div class="form-group">
+                  <label  style="margin-right: 74px;" for="{{ form.password1.id_for_label }}">Password</label>
+                  {{ form.password1 }}
+                </div>
+                <div class="form-group">
+                  <label  style="margin-right: 14px;" for="{{ form.password2.id_for_label }}">Confirm_password</label>
+                  {{ form.password2 }}
+                </div>
+                <div class="form-group">
+                  <label  style="margin-right: 35px;" for="{{ form.phone_number.id_for_label }}">Phone_Number</label>
+                  {{ form.phone_number }}
+                </div>
+                <button type="submit" class="btn btn-primary">Enregistrer</button>
+              </form>
+              <p><strong>------- OU --------</strong></p>
+              <a class="btn btn-primary" href="{% url 'social:begin' 'facebook' %}"> <i class="fa-brands fa-facebook fa-xl"></i> S'inscire avec Facebook</a> 
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
+{% endblock content %}
